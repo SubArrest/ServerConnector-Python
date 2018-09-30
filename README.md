@@ -13,5 +13,5 @@
     <li>brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb</li>
 </ul>
 <footer>
-    ~Python Code Made By: SubArrest
+    <p>~Python Code Made By: SubArrest</p>
 </footer>
