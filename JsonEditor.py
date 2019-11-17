@@ -42,7 +42,6 @@ class Start:
             for b in self.data['servers']:
                 if self.ans4 == b:
                     self.hasFound = True
-                    del self.data['servers'][self.ans4]
                     self.loop4 = "n"
                     break
                 elif self.ans4 == "x":
@@ -51,6 +50,16 @@ class Start:
                     sys.exit()
             if self.hasFound == False:
                 print("That server does not exist!")
+            else:
+                del self.data['servers'][self.ans4]
+                count = 1
+                for j in list(self.data['servers'].keys()):
+                    count += 1
+                    if int(j) > int(self.ans4):
+                        self.data['servers'][str(count-1)] = self.data['servers'][str(count)]
+                        self.data['servers'].pop(str(count))
+                    else:
+                        pass
             with open(path_to_json, "w") as f:
                 json.dump(self.data, f, indent=4)
 
