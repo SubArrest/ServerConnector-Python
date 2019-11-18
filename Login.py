@@ -12,13 +12,12 @@ class StartLogin:
         global path_to_json
         with open(path_to_json, "r") as f:
             self.data = json.load(f, object_pairs_hook=OrderedDict)
-        for l in self.data:
-            self.output = l['enabled']
-        if self.output == "option":
+        output = self.data[0]['enabled']
+        if output == "option":
             self.option(skip_usr)
-        elif self.output == False:
+        elif not output:
             return
-        elif self.output == True:
+        elif output:
             self.att = 0
             self.login(self.att)
         else:
@@ -47,8 +46,7 @@ class StartLogin:
 
     def jenablen(self):
         global path_to_json
-        for l in self.data:
-            l['enabled'] = True
+        self.data[0]['enabled'] = True
         with open(path_to_json, "w") as f:
             json.dump(self.data, f, indent=4)
         print("Login System Enabled Successfully!")
@@ -72,8 +70,7 @@ class StartLogin:
 
     def submituser(self, usr, passwd):
         global path_to_json
-        for l in self.data:
-            l['enabled'] = True
+        self.data[0]['enabled'] = True
         entry = {usr: [{"password": passwd}]}
         self.data[0]['users'].update(entry)
         with open(path_to_json, "w") as f:
@@ -83,8 +80,7 @@ class StartLogin:
 
     def jdisable(self):
         global path_to_json
-        for l in self.data:
-            l['enabled'] = False
+        self.data[0]['enabled'] = False
         with open(path_to_json, "w") as f:
             json.dump(self.data, f, indent=4)
         print("Login System Disabled Successfully!")
@@ -107,10 +103,10 @@ class StartLogin:
         num = 0
         num2 = 0
         for l in self.data[0]['users']:
-            num2 = num2 + 1
+            num2 += 1
 
         for o in self.data[0]['users']:
-            num = num + 1
+            num += 1
             if susr == o:
                 try:
                     for k in self.data[0]['users'][susr]:
@@ -119,7 +115,7 @@ class StartLogin:
                             break
                         else:
                             print("Username or Password not recognised!")
-                            self.att = self.att + 1
+                            self.att += 1
                             self.login(self.att)
                     break
                 except:
@@ -129,7 +125,7 @@ class StartLogin:
                     pass
                 else:
                     print("Username or Password not recognised!")
-                    self.att = self.att + 1
+                    self.att += 1
                     self.login(self.att)
 
 
@@ -138,7 +134,7 @@ def config():
     with open(path_to_json, "r") as f:
         c_data = json.load(f, object_pairs_hook=OrderedDict)
     while True:
-        option = input("Keep Current Users (Y/n)? ")
+        option = input("Keep Current Users (Y/n) (b: Back)? ")
         if option == "Y" or option == "" or option == "y":
             for k in c_data:
                 k['enabled'] = "option"
@@ -153,6 +149,9 @@ def config():
             with open(path_to_json, "w") as f:
                 json.dump(c_data, f, indent=4)
             StartLogin(False)
+            break
+        elif option == "b":
+            print()
             break
         else:
             print("Not Valid Option")

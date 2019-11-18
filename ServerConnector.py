@@ -13,42 +13,46 @@ class Start:
         with open(path_to_json, "r") as f:
             self.data = json.load(f, object_pairs_hook=OrderedDict)
 
-            self.loop2 = "y"
-        while self.loop2 != "n":
+        loop = "y"
+        while loop != "n":
+            back = "n"
             print("~Server Connector~")
             print("------------------")
-            self.num = 0
+            num = 0
             for q in self.data['servers']:
-                self.num = self.num + 1
-                for w in self.data['servers'][q]:
-                    self.name = w['name']
-                print(str(self.num) + ":", self.name)
+                num += 1
+                name = self.data['servers'][q][0]['name']
+                print(str(num) + ":", name)
+            print("b: Back")
             print("x: Exit")
             print("------------------")
-            self.ans2 = input()
-            self.hasFound = False
+            ans = input()
+            hasFound = False
             for o in self.data['servers']:
-                if self.ans2 == o:
-                    self.hasFound = True
-                    for p in self.data['servers'][self.ans2]:
-                        self.username = p['username']
-                        self.password = p['password']
-                        self.ip = p['ip']
-                    print("Connecting...")
-                    call(["sshpass", "-p", self.password, "ssh", "-o", "StrictHostKeyChecking=no", self.username + "@" + self.ip])
-                    self.loop2 = "n"
+                if ans == o:
+                    hasFound = True
                     break
-                elif self.ans2 == "x":
-                    self.loop2 = "n"
-                    self.hasFound = True
+                elif ans == "b":
+                    loop = "n"
+                    back = "y"
+                    hasFound = True
+                    print()
+                    break
+                elif ans == "x":
+                    loop = "n"
+                    hasFound = True
                     print("Exiting...")
                     sys.exit()
-            self.check = self.data['servers'].get('1')
-            if self.check != None and self.hasFound == False:
-                print("That server does not exist!")
-            elif self.check == None and self.ans2 == "x":
-                self.loop2 = "n"
-                print("Exiting...")
-                sys.exit()
+            check = self.data['servers'].get('1')
+            if check is not None and not hasFound:
+                print("Invalid Option")
+            elif hasFound:
+                if back != "y":
+                    username = self.data['servers'][ans][0]['username']
+                    password = self.data['servers'][ans][0]['password']
+                    ip = self.data['servers'][ans][0]['ip']
+                    print("Connecting...")
+                    call(["sshpass", "-p", password, "ssh", "-o", "StrictHostKeyChecking=no", username + "@" + ip])
+                    loop = "n"
             else:
-                print("That server does not exist!")
+                print("Invalid Option")

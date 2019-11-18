@@ -15,8 +15,7 @@ path_to_json = Path(__file__[0:-int(len(os.path.basename(__file__)))] + "/Users.
 with open(path_to_json, "r") as f:
     data = json.load(f, object_pairs_hook=OrderedDict)
 
-loop1 = "y"
-while loop1 != "n":
+while True:
     print("~Server List Manager~")
     print("---------------------")
     print("1: Server Connector")
@@ -24,18 +23,14 @@ while loop1 != "n":
     print("3: Login Configurations")
     print("x: Exit")
     print("---------------------")
-    ans1 = input()
-    if ans1 == "1":
-        loop1 = "n"
+    ans = input()
+    if ans == "1":
         sc.Start()
-    elif ans1 == "2":
-        loop1 = "n"
+    elif ans == "2":
         je.Start()
-    elif ans1 == "3":
-        loop1 = "n"
+    elif ans == "3":
         Login.config()
-    elif ans1 == "x":
-        loop1 = "n"
+    elif ans == "x":
         print("Exiting...")
         sys.exit()
     else:
