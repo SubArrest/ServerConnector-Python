@@ -12,7 +12,7 @@ class StartLogin:
         global path_to_json
         with open(path_to_json, "r") as f:
             self.data = json.load(f, object_pairs_hook=OrderedDict)
-        output = self.data[0]['enabled']
+        output = self.data['enabled']
         if output == "option":
             self.option(skip_usr)
         elif not output:
@@ -46,7 +46,7 @@ class StartLogin:
 
     def jenablen(self):
         global path_to_json
-        self.data[0]['enabled'] = True
+        self.data['enabled'] = True
         with open(path_to_json, "w") as f:
             json.dump(self.data, f, indent=4)
         print("Login System Enabled Successfully!")
@@ -70,9 +70,9 @@ class StartLogin:
 
     def submituser(self, usr, passwd):
         global path_to_json
-        self.data[0]['enabled'] = True
+        self.data['enabled'] = True
         entry = {usr: [{"password": passwd}]}
-        self.data[0]['users'].update(entry)
+        self.data['users'].update(entry)
         with open(path_to_json, "w") as f:
             json.dump(self.data, f, indent=4)
         print("User Setup Complete!")
@@ -80,7 +80,7 @@ class StartLogin:
 
     def jdisable(self):
         global path_to_json
-        self.data[0]['enabled'] = False
+        self.data['enabled'] = False
         with open(path_to_json, "w") as f:
             json.dump(self.data, f, indent=4)
         print("Login System Disabled Successfully!")
@@ -102,14 +102,14 @@ class StartLogin:
     def submit(self, susr, spasswd):
         num = 0
         num2 = 0
-        for l in self.data[0]['users']:
+        for l in self.data['users']:
             num2 += 1
 
-        for o in self.data[0]['users']:
+        for o in self.data['users']:
             num += 1
             if susr == o:
                 try:
-                    for k in self.data[0]['users'][susr]:
+                    for k in self.data['users'][susr]:
                         if spasswd == k['password']:
                             print("~Logged In~")
                             break
@@ -136,16 +136,14 @@ def config():
     while True:
         option = input("Keep Current Users (Y/n) (b: Back)? ")
         if option == "Y" or option == "" or option == "y":
-            for k in c_data:
-                k['enabled'] = "option"
+            c_data['enabled'] = "option"
             with open(path_to_json, "w") as f:
                 json.dump(c_data, f, indent=4)
             StartLogin(True)
             break
         elif option == "n" or option == "N":
-            for k in c_data:
-                k['enabled'] = "option"
-                k['users'] = {}
+            c_data['enabled'] = "option"
+            c_data['users'] = {}
             with open(path_to_json, "w") as f:
                 json.dump(c_data, f, indent=4)
             StartLogin(False)

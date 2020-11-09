@@ -22,7 +22,7 @@ class Start:
         while True:
             submit = input("Submit Details? (Y/n): ")
             if submit == "" or submit == "Y" or submit == "y":
-                entry = {str(servnum): [{"name": name, "username": username, "password": password, "ip": ip}]}
+                entry = {str(servnum): {"name": name, "username": username, "password": password, "ip": ip}}
                 self.data['servers'].update(entry)
                 with open(path_to_json, 'w') as f:
                     json.dump(self.data, f, indent=4)
@@ -39,7 +39,7 @@ class Start:
             print("~Delete Server~")
             print("---------------")
             for m in self.data['servers']:
-                name = self.data['servers'][m][0]['name']
+                name = self.data['servers'][m]['name']
                 print(str(m) + ":", name)
             print("b: Back")
             print("---------------")
@@ -75,30 +75,30 @@ class Start:
     def detailchoice(self, choice):
         loop = "y"
         while loop != "n":
-            print("~Editing:", self.data['servers'][choice][0]['name'] + "~")
-            print("-" * int(len(self.data['servers'][choice][0]['name']) + 11))
+            print("~Editing:", self.data['servers'][choice]['name'] + "~")
+            print("-" * int(len(self.data['servers'][choice]['name']) + 11))
             print("1: Server Name")
             print("2: Username")
             print("3: Password")
             print("4: IP")
             print("b: Back")
-            print("-" * int(len(self.data['servers'][choice][0]['name']) + 11))
+            print("-" * int(len(self.data['servers'][choice]['name']) + 11))
             ans = input()
             if ans == "1":
                 name = input("Server Name: ")
-                self.data['servers'][choice][0]['name'] = name
+                self.data['servers'][choice]['name'] = name
                 print("Server Name Changed")
             elif ans == "2":
                 username = input("Username: ")
-                self.data['servers'][choice][0]['username'] = username
+                self.data['servers'][choice]['username'] = username
                 print("Server Username Changed")
             elif ans == "3":
                 password = input("Password: ")
-                self.data['servers'][choice][0]['password'] = password
+                self.data['servers'][choice]['password'] = password
                 print("Server Password Changed")
             elif ans == "4":
                 ip = input("Ip: ")
-                self.data['servers'][choice][0]['ip'] = ip
+                self.data['servers'][choice]['ip'] = ip
                 print("Server IP Changed")
             elif ans == "b":
                 loop = "n"
@@ -113,7 +113,7 @@ class Start:
             print("~Edit Existing Server~")
             print("----------------------")
             for m in self.data['servers']:
-                name = self.data['servers'][m][0]['name']
+                name = self.data['servers'][m]['name']
                 print(str(m) + ":", name)
             print("b: Back")
             print("----------------------")

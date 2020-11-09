@@ -1,6 +1,4 @@
-[
-    {
-        "users": {},
-        "enabled": "option"
-    }
-]
+{
+    "users": {},
+    "enabled": false
+}

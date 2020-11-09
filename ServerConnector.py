@@ -21,7 +21,7 @@ class Start:
             num = 0
             for q in self.data['servers']:
                 num += 1
-                name = self.data['servers'][q][0]['name']
+                name = self.data['servers'][q]['name']
                 print(str(num) + ":", name)
             print("b: Back")
             print("x: Exit")
@@ -48,9 +48,9 @@ class Start:
                 print("Invalid Option")
             elif hasFound:
                 if back != "y":
-                    username = self.data['servers'][ans][0]['username']
-                    password = self.data['servers'][ans][0]['password']
-                    ip = self.data['servers'][ans][0]['ip']
+                    username = self.data['servers'][ans]['username']
+                    password = self.data['servers'][ans]['password']
+                    ip = self.data['servers'][ans]['ip']
                     print("Connecting...")
                     call(["sshpass", "-p", password, "ssh", "-o", "StrictHostKeyChecking=no", username + "@" + ip])
                     loop = "n"
